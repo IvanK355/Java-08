@@ -1,18 +1,19 @@
 import java.util.HashMap;
 
 public class Report implements Runnable {
-    private final HashMap hashMap;
+    private final HashMap <String, ApplePicker> reportHashMap;
 
-    public Report(HashMap hashMap) {
-        this.hashMap = hashMap;
+    public Report(HashMap <String, ApplePicker> hashMap) {
+
+        this.reportHashMap = hashMap;
     }
 
     @Override
     public void run() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String paws = ", ";
 
-        for (Object value : hashMap.values()) {
+        for (Object value : reportHashMap.values()) {
             ApplePicker applePicker = (ApplePicker) value;
 
             sb.append(applePicker.qtyApple / applePicker.workDuration).append(paws);
