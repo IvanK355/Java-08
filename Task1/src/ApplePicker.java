@@ -36,7 +36,7 @@ public class ApplePicker implements Runnable{
         }
         System.out.printf("%s finished... \n", name);
         //Put require no synchronization
-        syncHashMap.put(name, qtyApple);
+        syncHashMap.put(name, (int) (qtyApple/workDuration));
 
         //Iterator<String> itr = syncHashMap.keySet().iterator();
 

@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 public class Main {
@@ -6,9 +7,11 @@ public class Main {
         CountDownLatch latch = new CountDownLatch(5);
         long timeHavest;
         Thread[] threads = new Thread[5];
+        ApplePicker[] applePickers = new ApplePicker[5];
         for (int i = 0; i < threads.length; i++) {
             timeHavest = (long) (2600 * Math.random() + 900);
-            threads[i] = new Thread( new ApplePicker("ApplePicker"+i, latch, timeHavest));
+            applePickers[i] = new ApplePicker("ApplePicker"+i, latch, timeHavest);
+            threads[i] = new Thread(applePickers[i]);
             threads[i].start();
 
         }
@@ -20,6 +23,15 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(ApplePicker.syncHashMap);
+        HashMap map = new HashMap(ApplePicker.syncHashMap);
+        System.out.println(map);
+
+        Thread report = new Thread(new Report(map));
+        report.start();
+
+        for (Object value : hashMap.values()) {
+            sb.append(value).append(paws);
+        }
+
     }
 }
