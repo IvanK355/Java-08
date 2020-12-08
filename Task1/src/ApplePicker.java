@@ -5,13 +5,11 @@ import java.util.concurrent.CountDownLatch;
 
 public class ApplePicker implements Runnable {
     final Object lock = new Object();
-    CountDownLatch latch;
-    String namePicker;
-    int qtyApple;
-    long workDuration;
-    long timeout;
-    long start;
-    long finish;
+    public CountDownLatch latch;
+    public String namePicker;
+    public int qtyApple;
+    public long workDuration;
+    private long timeout;
 
     public static Map<String, ApplePicker> syncHashMap = Collections.synchronizedMap(new HashMap<>());
 
@@ -30,6 +28,7 @@ public class ApplePicker implements Runnable {
     @Override
     public void run() {
 
+        long start;
         synchronized (lock) {
 
             start = System.currentTimeMillis();
@@ -42,8 +41,8 @@ public class ApplePicker implements Runnable {
         }
 
         synchronized (lock) {
-            finish = System.currentTimeMillis();
-            workDuration = finish-start;
+            long finish = System.currentTimeMillis();
+            workDuration = finish - start;
             qtyApple = (int) (workDuration * 10 * Math.PI * (Math.random() * (1.5 - 0.8) + 0.8));
         }
         syncHashMap.put(namePicker, new ApplePicker(namePicker,workDuration,qtyApple));
